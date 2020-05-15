@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poetry/Pages/test.dart';
+import 'Pages/main.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(color: Colors.white),
         primarySwatch: Colors.blue,
       ),
-      home: Home()
+      home: Main(),
     );
   }
 }
