@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:poetry/Models/post.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -6,18 +8,34 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<String> numbers = ['Title', 'Title', 'Title', 'Title', 'Title', 'Title', ];
+  CrudMethods crudMethods = CrudMethods();
+  QuerySnapshot blogs;
 
-int currentIndex;
+  int currentIndex;
+
+  @override
+    void initState(){
+      super.initState();
+      crudMethods.getData().then((result){
+        blogs = result;
+      });
+    }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        // title: Text(
-        //   'Poetry',
-        //   style:TextStyle(fontSize:27, color: Colors.black),
-        // ),
+        title: Text(
+          'Poetry',
+          style:TextStyle(
+            color: Colors.black,
+            fontSize:27, 
+            fontFamily: 'Pacifico',
+          ),
+        ),
+        centerTitle: true,
       leading: GestureDetector(
         onTap: () {
           Navigator.of(context).pop();
@@ -41,14 +59,20 @@ int currentIndex;
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left:20.0),
-            child: Text("Popular",style: TextStyle(fontSize:25),),
+            child: Text("Popular",
+              style: TextStyle(
+                fontSize:25,
+                fontFamily: 'Source Sans Pro',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * .35,
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+            height: MediaQuery.of(context).size.height * .30,
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount:numbers.length,
+              itemCount:blogs.documents.length,
               itemBuilder: (context, index){
                 return Container(
                   width: MediaQuery.of(context).size.width * 0.6,
@@ -57,7 +81,7 @@ int currentIndex;
                       decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
                       image: DecorationImage(
-                        image: NetworkImage('https://placeimg.com/640/480/any'),
+                        image: NetworkImage(blogs.documents[index].data["imgUrl"]),
                         fit: BoxFit.fill,
                         colorFilter: new ColorFilter.mode(
                           Colors.black.withOpacity(1.0),
@@ -72,8 +96,12 @@ int currentIndex;
                           child: Align(
                             alignment: Alignment.topLeft,
                               child: Text(
-                                numbers[index].toString(),
-                                style: TextStyle(color: Colors.white, fontSize: 28.0),
+                                blogs.documents[index].data["title"],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28.0,
+                                  fontFamily: 'Source Sans Pro',
+                                ),
                                 ),
                           ),
                         ),
@@ -90,8 +118,12 @@ int currentIndex;
                               ),
                             ),
                             Text(
-                              "Author",
-                              style: TextStyle(color:Colors.white, fontSize:15),
+                              blogs.documents[index].data["author"],
+                              style: TextStyle(
+                                color:Colors.white,
+                                fontSize:12,
+                                fontFamily: 'Source Sans Pro',
+                              ),
                             ),
                           ],
                         )
@@ -110,23 +142,38 @@ int currentIndex;
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(left:20.0),
-                    child: Text("All Posts",style: TextStyle(fontSize:25),),
+                    child: Text("All Posts",
+                      style: TextStyle(
+                        fontSize:25,
+                        fontFamily: 'Source Sans Pro',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: numbers.length,
+                    itemCount: blogs.documents.length,
                     itemBuilder: (BuildContext context, int index) {
+                      var initial = blogs.documents[index].data["author"];
                       return Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: ListTile(
                             leading: CircleAvatar(
                               radius: 40,
-                              child: Text('AJ'),
+                              child: Text(
+                                "${initial[0]}${initial[1]}".toUpperCase(),
+                              ),
                             ),
                             title: Padding(
                               padding: const EdgeInsets.only(bottom:15.0),
-                              child: Text('Understanding Peace in trying times'),
+                              child: Text(blogs.documents[index].data["title"],
+                              style: TextStyle(
+                                fontFamily: 'Source Sans Pro',
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              ),
                             ),
                             subtitle: Row(
                               children: <Widget>[
@@ -135,7 +182,12 @@ int currentIndex;
                                   size: 15,
                                 ),
                                 SizedBox(width: 5),
-                                Text("21 Minutes ago"),
+                                Text("21 Minutes ago",
+                                style: TextStyle(
+                                  fontFamily: 'Source Sans Pro',
+                                  fontSize: 10.0,
+                                ),
+                                ),
                               ],
                             ),
                             trailing: Icon(Icons.arrow_forward_ios),

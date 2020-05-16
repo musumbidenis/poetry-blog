@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:poetry/Pages/home.dart';
-import 'package:poetry/Pages/new.dart';
 import 'package:poetry/Pages/notification.dart';
 import 'package:poetry/Pages/profile.dart';
 import 'package:poetry/Pages/setings.dart';
+
+import 'create.dart';
 
 
 class Main extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MainState extends State<Main> {
         ), 
         onPressed: () {
           setState(() {
-            currentScreen = NewPost();
+            currentScreen = CreatePost();
             currentTab = 4;
           });
         },
