@@ -41,7 +41,7 @@ int currentIndex;
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left:20.0),
-            child: Text("Latest",style: TextStyle(fontSize:25),),
+            child: Text("Popular",style: TextStyle(fontSize:25),),
           ),
           Container(
             height: MediaQuery.of(context).size.height * .35,
@@ -117,74 +117,30 @@ int currentIndex;
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: numbers.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height* 0.25,
-                        child: Card(
-                          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                          elevation: 18.0,
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius:BorderRadius.all(Radius.circular(8)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 40,
+                              child: Text('AJ'),
+                            ),
+                            title: Padding(
+                              padding: const EdgeInsets.only(bottom:15.0),
+                              child: Text('Understanding Peace in trying times'),
+                            ),
+                            subtitle: Row(
                               children: <Widget>[
-                                Text(
-                                  "snapshot.data[index].sessionStop,",
-                                  style: TextStyle(
-                                  color: Color(0xffe6020a),
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.bold),
+                                Icon(
+                                  Icons.timelapse,
+                                  size: 15,
                                 ),
-                                Text(
-                                  "snapshot.data[index].sessionStop,",
-                                  style: TextStyle(
-                                  color: Colors.black54, fontSize: 18),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment:  MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "snapshot.data[index].sessionStop,",
-                                      style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      "--",
-                                      style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "snapshot.data[index].sessionStop,",
-                                        style: TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                )
+                                SizedBox(width: 5),
+                                Text("21 Minutes ago"),
                               ],
                             ),
+                            trailing: Icon(Icons.arrow_forward_ios),
+                            onTap: (){},
                           ),
-                        ),
                       );
                     }
                   )

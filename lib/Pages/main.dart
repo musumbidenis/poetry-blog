@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poetry/Pages/home.dart';
+import 'package:poetry/Pages/new.dart';
 import 'package:poetry/Pages/notification.dart';
 import 'package:poetry/Pages/profile.dart';
 import 'package:poetry/Pages/setings.dart';
@@ -33,7 +34,12 @@ class _MainState extends State<Main> {
         child: const Icon(
           Icons.edit,
         ), 
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            currentScreen = NewPost();
+            currentTab = 4;
+          });
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
@@ -43,11 +49,11 @@ class _MainState extends State<Main> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
               IconButton(
-              iconSize: 30.0,
+              iconSize: 25.0,
               padding: EdgeInsets.only(left: 28.0),
               icon: Icon(
                 Icons.home,
-                color: currentTab == 0 ? Colors.redAccent : Colors.black,
+                color: currentTab == 0 ? Colors.redAccent : Colors.grey,
               ),
               onPressed: () {
                 setState(() {
@@ -57,11 +63,11 @@ class _MainState extends State<Main> {
               },
             ),
             IconButton(            
-              iconSize: 30.0,
+              iconSize: 25.0,
               padding: EdgeInsets.only(right: 28.0),
               icon: Icon(
                 Icons.notifications,
-                color: currentTab == 1 ? Colors.redAccent : Colors.black,
+                color: currentTab == 1 ? Colors.redAccent : Colors.grey,
               ),
               onPressed: () {
                 setState(() {
@@ -71,11 +77,11 @@ class _MainState extends State<Main> {
               },
             ),
             IconButton(
-              iconSize: 30.0,
+              iconSize: 25.0,
               padding: EdgeInsets.only(left: 28.0),
               icon: Icon(
                 Icons.account_circle,
-                color: currentTab == 2 ? Colors.redAccent : Colors.black,
+                color: currentTab == 2 ? Colors.redAccent : Colors.grey,
               ),
               onPressed: () {
                 setState(() {
@@ -89,7 +95,7 @@ class _MainState extends State<Main> {
               padding: EdgeInsets.only(right: 28.0),
               icon: Icon(
                 Icons.settings,
-                color: currentTab == 3 ? Colors.redAccent : Colors.black,
+                color: currentTab == 3 ? Colors.redAccent : Colors.grey,
               ),
               onPressed: () {
                 setState(() {
