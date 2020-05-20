@@ -17,9 +17,7 @@ class _NotifyState extends State<Notify> {
         ),
         centerTitle: true,
       leading: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pop();
-        },
+        onTap: () => Navigator.pop(context),
           child: Icon(
           Icons.arrow_back_ios,
           size: 25.0,

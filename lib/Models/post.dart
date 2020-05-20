@@ -1,14 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+class Post {
+  final int postId;
+  final String title;
+  final String description;
+  final String imageUrl;
+  final String username;
 
-class CrudMethods{
-  Future<void> addData(blogData) async{
-    Firestore.instance.collection('blogs').add(blogData).catchError((e){
-      print(e);
-    });
-  }
-  
-  Future getData() async {
-    return await Firestore.instance.collection('blogs').getDocuments();
-  }
-
+  Post(this.title, this.description, this.imageUrl, this.username, this.postId);
 }

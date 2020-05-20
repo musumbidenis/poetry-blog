@@ -19,7 +19,7 @@ class _MainState extends State<Main> {
 
   // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = Home(); // Our first view in viewport
+  Widget currentScreen = CreatePost(); // Our first view in viewport
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +57,10 @@ class _MainState extends State<Main> {
                 color: currentTab == 0 ? Colors.redAccent : Colors.grey,
               ),
               onPressed: () {
-                setState(() {
-                  currentScreen = Home();
-                  currentTab = 0;
-                });
+                // setState(() {
+                //   currentScreen = Home();
+                //   currentTab = 0;
+                // });
               },
             ),
             IconButton(            
