@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poetry/Models/api.dart';
 import 'package:poetry/Pages/home.dart';
+import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-
 class CreatePost extends StatefulWidget {
   @override
   _CreatePostState createState() => _CreatePostState();
 }
 
 class _CreatePostState extends State<CreatePost> {
-  String username, title, description, imageUrl;
+  String username, title, description;
   File selectedImage;
 
   bool isLoading = false;
@@ -39,7 +38,7 @@ class _CreatePostState extends State<CreatePost> {
       'description': description,
       'username': username,
       'image': base64Encode(selectedImage.readAsBytesSync()),
-      'imageName': '1234',
+      'imageName': randomAlphaNumeric(9),
     };
     print(data);
     var response = await CallAPi().postData(data, 'post');
@@ -167,6 +166,9 @@ class _CreatePostState extends State<CreatePost> {
                           isLoading = true;
                         });
                         // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                        setState(() {
+                          isLoading = false;
+                        });
                       },
                     ),
                   ),
