@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poetry/Models/api.dart';
-import 'package:poetry/Pages/home.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class CreatePost extends StatefulWidget {
@@ -48,6 +47,10 @@ class _CreatePostState extends State<CreatePost> {
       print("Yesss! I did it.");
     }else{
       print(body);
+      //Set loading state of button to false//
+      setState(() {
+        isLoading = false;
+      });
     }
   
   }

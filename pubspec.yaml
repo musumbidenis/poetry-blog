@@ -29,6 +29,7 @@ dependencies:
   jiffy: ^3.0.1
   shared_preferences:
   http: ^0.12.1
+  flushbar: ^1.10.4
 
 dev_dependencies:
   flutter_test:

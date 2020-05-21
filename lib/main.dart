@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:poetry/Pages/login.dart';
-import 'package:poetry/Pages/register.dart';
-import 'Pages/main.dart';
+import 'Pages/login.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget { 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
