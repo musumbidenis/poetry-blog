@@ -11,20 +11,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String username;
-  int currentIndex;
 
   @override
-    void initState(){
-      super.initState();
-      getPosts();
-    }
+  void initState(){
+    super.initState();
+    getPosts();
+  }
 
   /*Fetch the posts */
   Future<List<Post>> getPosts() async {
-
     var response = await CallAPi().getData('posts');
     var jsonData = json.decode(response.body);
-    print(jsonData);
+
     /*Create a list array to store the fetched data*/
     List<Post> posts= [];
 
@@ -150,59 +148,71 @@ class _HomeState extends State<Home> {
                       return Container(
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: Card(
-                          child: Container(
-                            decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
-                            image: DecorationImage(
-                              image: NetworkImage(snapshot.data[index].imageUrl),
-                              fit: BoxFit.fill,
-                              colorFilter: new ColorFilter.mode(
-                                Colors.black.withOpacity(1.0),
-                                BlendMode.softLight,
-                              ),
-                            ),
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                    child: Text(
-                                      snapshot.data[index].title,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18.0,
-                                        fontFamily: 'Source Sans Pro',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      ),
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => PostData(
+                                  title:"${snapshot.data[index].title}",
+                                  description: "${snapshot.data[index].description}",
+                                  imageUrl: "${snapshot.data[index].imageUrl}",
+                                  username: "${snapshot.data[index].username}",
+                                ),
+                              ));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              image: DecorationImage(
+                                image: NetworkImage(snapshot.data[index].imageUrl),
+                                fit: BoxFit.fill,
+                                colorFilter: new ColorFilter.mode(
+                                  Colors.black.withOpacity(1.0),
+                                  BlendMode.softLight,
                                 ),
                               ),
-                              Spacer(),
-                              Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: CircleAvatar(
-                                        radius: 10.0,
-                                      )
-                                    ),
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                      child: Text(
+                                        snapshot.data[index].title,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.0,
+                                          fontFamily: 'Source Sans Pro',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        ),
                                   ),
-                                  Text(
-                                    snapshot.data[index].username,
-                                    style: TextStyle(
-                                      color:Colors.black,
-                                      fontSize:12,
-                                      fontFamily: 'Source Sans Pro',
+                                ),
+                                Spacer(),
+                                Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: CircleAvatar(
+                                          radius: 10.0,
+                                        )
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                                    Text(
+                                      snapshot.data[index].username,
+                                      style: TextStyle(
+                                        color:Colors.black,
+                                        fontSize:12,
+                                        fontFamily: 'Source Sans Pro',
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            ),
                           ),
                         ),
                       );

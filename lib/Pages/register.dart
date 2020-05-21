@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:poetry/Models/api.dart';
 import 'package:poetry/Pages/login.dart';
@@ -201,7 +202,7 @@ class _RegisterState extends State<Register> {
         "phone": phone.text,
       };
 
-      //Set the registration button to loading state//
+      /*Set the registration button to loading state */
       setState(() {
         _isLoading = true;
       });
@@ -214,7 +215,36 @@ class _RegisterState extends State<Register> {
         /*Navigate to login page */
         Navigator.pop(context);
 
-        //Set loading state of button to false//
+        /**Set loading state of button to false &&
+         * Clear the text fields
+        */
+        username.clear();
+        password.clear();
+        email.clear();
+        phone.clear();
+        setState(() {
+          _isLoading = false;
+        });
+
+        /**Display success message */
+        Flushbar(
+          message:  "Registration was successfull!",
+          duration:  Duration(seconds: 10),  
+          backgroundColor: Colors.green,            
+        )..show(context);
+
+      }else if(body == 'userExists'){
+        /**Display error message */
+        Flushbar(
+          message:  "Username already taken! Please choose a unique username.",
+          duration:  Duration(seconds: 10),  
+          backgroundColor: Colors.red,            
+        )..show(context);
+
+        /**Set loading state of button to false &&
+         * Clear the username text field
+        */
+        username.clear();
         setState(() {
           _isLoading = false;
         });

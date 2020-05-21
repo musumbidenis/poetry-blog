@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:poetry/Models/api.dart';
 import 'package:poetry/Pages/main.dart';
@@ -23,7 +24,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 60.0),
+          padding: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 150.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -102,24 +103,24 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 20.0),
                     Container(
                       height: 50.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.redAccent,
-                        color: Colors.red,
-                        elevation: 5.0,
-                        child: GestureDetector(
-                          child: Center(
-                            child: Text( _isLoading ? 'LOGING..' :
-                              'LOGIN',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Source Sans Pro'
+                      child: GestureDetector(
+                        child: Material(
+                          borderRadius: BorderRadius.circular(20.0),
+                          shadowColor: Colors.redAccent,
+                          color: Colors.red,
+                          elevation: 5.0,
+                            child: Center(
+                              child: Text( _isLoading ? 'LOGING..' :
+                                'LOGIN',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Source Sans Pro'
+                                ),
                               ),
                             ),
-                          ),
-                          onTap: handleLogin,
                         ),
+                        onTap: handleLogin,
                       ),
                     ),
                   ],
@@ -157,7 +158,8 @@ class _LoginState extends State<Login> {
     );
   }
 
-    Future<void> handleLogin() async {
+
+  Future<void> handleLogin() async {
     var form = _formKey.currentState;
     if (form.validate()){
       form.save();
@@ -168,7 +170,7 @@ class _LoginState extends State<Login> {
         "password": password.text,
       };
 
-      //Set the registration button to loading state//
+      /*Set the login button to loading state */
       setState(() {
         _isLoading = true;
       });
@@ -181,13 +183,24 @@ class _LoginState extends State<Login> {
         /*Navigate to the Home page */
         Navigator.push(context, MaterialPageRoute(builder: (context) => Main()));
 
-        //Set loading state of button to false//
+        /*Set loading state of button to false */
         setState(() {
           _isLoading = false;
         });
+
       }else{
-        print(body);
-        //Set loading state of button to false//
+        /**Display error message */
+        Flushbar(
+          message:  "Incorrect details! Please try again.",
+          duration:  Duration(seconds: 3),  
+          backgroundColor: Colors.red,            
+        )..show(context);
+
+        /**Set loading state of button to false &&
+         * Clear the text fields
+         */
+        username.clear();
+        password.clear();
         setState(() {
           _isLoading = false;
         });
