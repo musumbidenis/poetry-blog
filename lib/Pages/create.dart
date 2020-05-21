@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poetry/Models/api.dart';
+import 'package:poetry/Pages/home.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class CreatePost extends StatefulWidget {
@@ -29,7 +30,6 @@ class _CreatePostState extends State<CreatePost> {
   /*Create new post*/
   Future createPost() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.setString('userKey', "musumbidenis");
     username = localStorage.getString('userKey');
 
     var data = {
@@ -168,7 +168,9 @@ class _CreatePostState extends State<CreatePost> {
                         setState(() {
                           isLoading = true;
                         });
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                        
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                        
                         setState(() {
                           isLoading = false;
                         });

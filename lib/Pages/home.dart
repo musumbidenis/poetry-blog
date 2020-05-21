@@ -10,7 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String username;
 
   @override
   void initState(){
@@ -119,7 +118,7 @@ class _HomeState extends State<Home> {
                             CircularProgressIndicator(),
                             SizedBox(height: 10.0,),
                             Text(
-                              "Loading sessions",
+                              "Loading posts",
                             )
                           ],
                         ),
@@ -203,7 +202,7 @@ class _HomeState extends State<Home> {
                                     Text(
                                       snapshot.data[index].username,
                                       style: TextStyle(
-                                        color:Colors.black,
+                                        color:Colors.white,
                                         fontSize:12,
                                         fontFamily: 'Source Sans Pro',
                                       ),
@@ -264,7 +263,7 @@ class _HomeState extends State<Home> {
                                   CircularProgressIndicator(),
                                   SizedBox(height: 10.0,),
                                   Text(
-                                    "Loading sessions",
+                                    "Loading posts",
                                   )
                                 ],
                               ),

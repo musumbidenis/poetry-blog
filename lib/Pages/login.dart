@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:poetry/Models/api.dart';
 import 'package:poetry/Pages/main.dart';
 import 'package:poetry/Pages/register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -183,7 +184,16 @@ class _LoginState extends State<Login> {
         /*Navigate to the Home page */
         Navigator.push(context, MaterialPageRoute(builder: (context) => Main()));
 
-        /*Set loading state of button to false */
+        /*Save the username of logged in user to localstorage */
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('userKey', username.text);
+    
+
+        /**Set loading state of button to false &&
+         * Clear the text fields
+         */
+        username.clear();
+        password.clear();
         setState(() {
           _isLoading = false;
         });
