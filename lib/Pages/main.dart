@@ -35,10 +35,7 @@ class _MainState extends State<Main> {
           Icons.edit,
         ), 
         onPressed: () {
-          setState(() {
-            currentScreen = CreatePost();
-            currentTab = 4;
-          });
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePost()));
         },
       ),
       bottomNavigationBar: BottomAppBar(

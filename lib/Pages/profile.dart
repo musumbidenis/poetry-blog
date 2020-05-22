@@ -29,7 +29,6 @@ class _ProfileState extends State<Profile> {
     
     var response = await CallAPi().postData(data,'userInfo');
     var jsonData = json.decode(response.body);
-    print(jsonData);
 
     /*Create a list array to store the fetched data*/
     List<UserInfo> details = [];

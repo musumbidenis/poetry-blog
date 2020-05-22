@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poetry/Models/api.dart';
@@ -12,10 +13,15 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
-  String username, title, description;
   File selectedImage;
 
   bool isLoading = false;
+
+  GlobalKey<FormState> _formKey = GlobalKey();
+
+  /*Text Controllers */
+  TextEditingController title = TextEditingController();
+  TextEditingController description = TextEditingController();
 
   /*Get the image from gallery */
   Future getImage() async{
@@ -29,30 +35,58 @@ class _CreatePostState extends State<CreatePost> {
 
   /*Create new post*/
   Future createPost() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    username = localStorage.getString('userKey');
+    var form = _formKey.currentState;
+    if (form.validate() && selectedImage != null){
+      form.save();
 
-    var data = {
-      'title': title,
-      'description': description,
-      'username': username,
-      'image': base64Encode(selectedImage.readAsBytesSync()),
-      'imageName': randomAlphaNumeric(9),
-    };
-    print(data);
-    var response = await CallAPi().postData(data, 'post');
-    var body = json.decode(response.body);
+      /*Retrieve the username of user from localStorage */
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var username = localStorage.getString('userKey');
 
-    if(body == 'success'){
-      print("Yesss! I did it.");
-    }else{
-      print(body);
-      //Set loading state of button to false//
+      var data = {
+        'title': title.text,
+        'description': description.text,
+        'username': username,
+        'image': base64Encode(selectedImage.readAsBytesSync()),
+        'imageName': randomAlphaNumeric(9),
+      };
+
+      /*Set the login button to loading state */
       setState(() {
-        isLoading = false;
+        isLoading = true;
       });
+
+      var response = await CallAPi().postData(data, 'post');
+      var body = json.decode(response.body);
+
+      if(body == 'success'){
+        /*Navigate to the Home page */
+        Navigator.pop(context);
+
+        /**Set loading state of button to false &&
+         * Clear the text fileds
+        */
+        title.clear();
+        description.clear();
+        setState(() {
+          isLoading = false;
+        });
+
+
+      }else{
+        /*Set loading state of button to false */
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }else if(selectedImage == null){
+      /**Display error message */
+      Flushbar(
+        message:  "Please select a cover Image for your piece!",
+        duration:  Duration(seconds: 3),  
+        backgroundColor: Colors.red,            
+      )..show(context);
     }
-  
   }
 
   @override
@@ -112,71 +146,74 @@ class _CreatePostState extends State<CreatePost> {
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                  child: Column(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
                       children: <Widget>[
                         SizedBox(height: 9.0),
-                        TextField(
+                        TextFormField(
+                          controller: title,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Title',
                           ),
-                          onChanged: (val) {
-                            title = val;
-                          },
                           style: TextStyle(
                             fontFamily: 'Source Sans Pro',
                           ),
+                          keyboardType: TextInputType.text,
+                          validator: (String value) {
+                            if (value.isEmpty) {
+                              return "Title field cannot be blank";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
                         SizedBox(height: 9.0),
                         Container(
                           padding: EdgeInsets.only(bottom: 40.0),
-                          child: TextField(
+                          child: TextFormField(
+                            controller: description,
                             maxLines: null,
-                            keyboardType: TextInputType.multiline,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: '\n \n **Creative Piece** \n \n',
                             ),
-                            onChanged: (val) {
-                              description = val;
-                            },
                             style: TextStyle(
                               fontFamily: 'Source Sans Pro',
                             ),
+                            keyboardType: TextInputType.multiline,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return "Creative piece field cannot be blank";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
                         ),
                       ],
                     ),
+                  ),
                 ),
                 Container(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    height: 50.0,
-                    child: FloatingActionButton.extended(
-                      elevation: 0.0,
-                      icon: Icon(
-                        Icons.file_upload, 
-                        size: 30.0,
-                      ),
-                      label: Text(isLoading ? 'Uploading..' :
-                        "Upload",
-                        style: TextStyle(
-                          fontFamily: 'Source Sans Pro',
-                          fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: (){
-                        createPost();
-                        setState(() {
-                          isLoading = true;
-                        });
-                        
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-                        
-                        setState(() {
-                          isLoading = false;
-                        });
-                      },
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  height: 50.0,
+                  child: FloatingActionButton.extended(
+                    elevation: 0.0,
+                    icon: Icon(
+                      Icons.file_upload, 
+                      size: 30.0,
                     ),
+                    label: Text(isLoading ? 'Uploading..' :
+                      "Upload",
+                      style: TextStyle(
+                        fontFamily: 'Source Sans Pro',
+                        fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: createPost,
                   ),
+                ),
               ],
             )
           ),
