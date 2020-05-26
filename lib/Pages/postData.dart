@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PostData extends StatefulWidget {
-  final String title, description, username, imageUrl;
+  final String title, description, username, imageUrl, timestamp;
 
-  const PostData({Key key, this.title, this.description, this.username, this.imageUrl}) : super(key: key);
+  const PostData({Key key, this.title, this.description, this.username, this.imageUrl, this.timestamp}) : super(key: key);
   @override
   _PostDataState createState() => _PostDataState();
 }
@@ -64,8 +64,10 @@ class _PostDataState extends State<PostData> {
                       controller: controller,
                       children: <Widget>[
                         ListTile(
-                          leading: CircleAvatar(
-                            
+                          leading: Icon(
+                            Icons.account_circle,
+                            color: Colors.blue,
+                            size: 50.0,
                           ),
                           title: Text(
                             widget.username,
@@ -77,11 +79,11 @@ class _PostDataState extends State<PostData> {
                           subtitle: Row(
                             children: <Widget>[
                               Icon(
-                                Icons.timelapse,
+                                Icons.query_builder,
                                 size: 15,
                               ),
                               SizedBox(width: 5),
-                              Text("21 Minutes ago",
+                              Text(widget.timestamp,
                                 style: TextStyle(
                                   fontFamily: 'Source Sans Pro',
                                   fontSize: 10.0,

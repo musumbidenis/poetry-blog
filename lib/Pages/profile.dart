@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:poetry/Models/api.dart';
 import 'package:poetry/Models/userInfo.dart';
+import 'package:poetry/Pages/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -61,8 +62,11 @@ class _ProfileState extends State<Profile> {
         ),
         centerTitle: true,
       leading: GestureDetector(
-        onTap: () => Navigator.pop(context),
-          child: Icon(
+        onTap: () {
+          /*Navigate to the Home page */
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Main()));
+        },
+        child: Icon(
           Icons.arrow_back_ios,
           size: 25.0,
           color: Colors.black,
@@ -80,7 +84,7 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               CircleAvatar(
                 radius: 60,
-                backgroundImage: snapshot.data[index].avatarUrl != null ?
+                backgroundImage: snapshot.data[index].avatarUrl == null ?
                 NetworkImage(snapshot.data[index].avatarUrl) :
                 NetworkImage('http://poetry.musumbidenis.co.ke/storage/app/default.jpg'),
               ),

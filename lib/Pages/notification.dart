@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poetry/Pages/main.dart';
 
 class Notify extends StatefulWidget {
   @override
@@ -17,8 +18,11 @@ class _NotifyState extends State<Notify> {
         ),
         centerTitle: true,
       leading: GestureDetector(
-        onTap: () => Navigator.pop(context),
-          child: Icon(
+        onTap: () {
+          /*Navigate to the Home page */
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Main()));
+        },
+        child: Icon(
           Icons.arrow_back_ios,
           size: 25.0,
           color: Colors.black,
