@@ -148,7 +148,7 @@ class _HomeState extends State<Home> {
                                               fontFamily: 'Source Sans Pro',
                                               fontWeight: FontWeight.bold,
                                             ),
-                                            ),
+                                          ),
                                       ),
                                     ),
                                     Spacer(),
@@ -235,12 +235,7 @@ class _HomeState extends State<Home> {
                                 return Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: ListTile(
-                                    leading:
-                                    //  snapshot.data[index].avatarUrl == null ? Icon(
-                                    //   Icons.account_circle,
-                                    //   size: 68.0,
-                                    // ) :
-                                    Icon(
+                                    leading:Icon(
                                       Icons.account_circle,
                                       color: Colors.blue,
                                       size: 70.0,
@@ -259,13 +254,12 @@ class _HomeState extends State<Home> {
                                       children: <Widget>[
                                         Icon(
                                           Icons.query_builder,
-                                          size: 15,
+                                          size: 10,
                                         ),
-                                        SizedBox(width: 5),
                                         Text("$timestamp",
                                         style: TextStyle(
                                           fontFamily: 'Source Sans Pro',
-                                          fontSize: 10.0,
+                                          fontSize: 8.0,
                                         ),
                                         ),
                                       ],

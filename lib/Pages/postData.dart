@@ -80,13 +80,12 @@ class _PostDataState extends State<PostData> {
                             children: <Widget>[
                               Icon(
                                 Icons.query_builder,
-                                size: 15,
+                                size: 10,
                               ),
-                              SizedBox(width: 5),
                               Text(widget.timestamp,
                                 style: TextStyle(
                                   fontFamily: 'Source Sans Pro',
-                                  fontSize: 10.0,
+                                  fontSize: 8.0,
                                 ),
                               ),
                             ],
@@ -99,20 +98,28 @@ class _PostDataState extends State<PostData> {
                         SizedBox(height: 9.0),
                         Column(
                           children: <Widget>[
-                            Text(
-                              widget.title,
-                              style: TextStyle(
-                                fontFamily: 'Source Sans Pro',
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                              child: Text(
+                                widget.title,
+                                style: TextStyle(
+                                  fontFamily: 'Source Sans Pro',
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             SizedBox(height: 9.0),
-                            Text(
-                              widget.description,
-                              style: TextStyle(
-                                fontFamily: 'Source Sans Pro',
-                                fontSize: 15.0,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                              child: Text(
+                                widget.description,
+                                style: TextStyle(
+                                  fontFamily: 'Source Sans Pro',
+                                  fontSize: 15.0,
+                                ),
+                                textAlign: TextAlign.justify,
                               ),
                             ),
                           ],
