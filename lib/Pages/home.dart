@@ -12,8 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  /*Create a list array to store the fetched data*/
-  List<Post> posts= [];
 
   @override
   void initState(){
@@ -25,6 +23,9 @@ class _HomeState extends State<Home> {
   Future<List<Post>> getPosts() async {
     var response = await CallAPi().getData('posts');
     var jsonData = json.decode(response.body);
+    print(jsonData);
+    /*Create a list array to store the fetched data*/
+    List<Post> posts= [];
 
     /*Loop through the jsonData and add the items to the list array created*/
     for (var p in jsonData) {
@@ -74,17 +75,8 @@ class _HomeState extends State<Home> {
          ),
        ],
       ),
-      body: posts.isEmpty ? 
-      Center(child: 
-        Text("No posts found!",
-         style: TextStyle(
-          fontSize: 22.0,
-          fontFamily: 'Source Sans Pro'
-         ),
-        )
-      ) :
-      RefreshIndicator(
-        onRefresh: getPosts,
+      body: RefreshIndicator(
+          onRefresh: getPosts,
           child: ListView(
             children: <Widget>[
               Padding(
