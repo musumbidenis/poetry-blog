@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
     /*Loop through the jsonData and add the items to the list array created*/
     for (var p in jsonData) {
       Post post = Post(
+        p["postId"],
         p["title"],
         p["description"],
         p["imageUrl"],
@@ -114,6 +115,7 @@ class _HomeState extends State<Home> {
                                 onTap: (){
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) => PostData(
+                                      postId: "${snapshot.data[index].postId}",
                                       title:"${snapshot.data[index].title}",
                                       description: "${snapshot.data[index].description}",
                                       imageUrl: "${snapshot.data[index].imageUrl}",
@@ -268,6 +270,7 @@ class _HomeState extends State<Home> {
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute(
                                         builder: (context) => PostData(
+                                          postId: "${snapshot.data[index].postId}",
                                           title:"${snapshot.data[index].title}",
                                           description: "${snapshot.data[index].description}",
                                           imageUrl: "${snapshot.data[index].imageUrl}",

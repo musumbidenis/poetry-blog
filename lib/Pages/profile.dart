@@ -72,6 +72,7 @@ print(jsonData);
     /*Loop through the jsonData and add the items to the list array created*/
     for (var uP in jsonData) {
       Post userPost = Post(
+        uP["postId"],
         uP["title"],
         uP["description"],
         uP["imageUrl"],
