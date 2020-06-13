@@ -40,7 +40,9 @@ class _MyAppState extends State<MyApp> {
 
     /*If !=null remain logged in */
     if(user!=null){
-      _isLoggedIn = true;
+      setState(() {
+        _isLoggedIn = true;
+      });
     }
   }
 }

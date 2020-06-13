@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:poetry/Models/api.dart';
@@ -14,7 +13,7 @@ class PostData extends StatefulWidget {
 }
 
 class _PostDataState extends State<PostData> {
-  bool isEmpty;
+  bool buttonEnabled = false;
 
 @override
   void initState(){
@@ -179,7 +178,7 @@ class _PostDataState extends State<PostData> {
             color: Colors.blue,
             size: 50.0,
           ),
-          title: TextField(
+          title: TextFormField(
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'Add a comment',
@@ -190,12 +189,24 @@ class _PostDataState extends State<PostData> {
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.transparent)
-            )
+            ),
           ),
           keyboardType: TextInputType.text,
+          validator: (String val){
+            if(val.isEmpty){
+              setState(() {
+                buttonEnabled = false;
+              });
+            }else{
+              setState(() {
+                buttonEnabled = true;
+              });
+            }
+            
+          },
           ),
-          trailing: MaterialButton(
-            onPressed: (){},
+          trailing: FlatButton(
+            onPressed: buttonEnabled == true ? (){} : null,
             child: Text("post",
               style: TextStyle(
                 color: Colors.blue,
